@@ -1,9 +1,6 @@
-
 #pragma once
-#include <iostream>
-#include <string>
-#include <memory>
 #include "character.h"
+#include <string>
 using namespace std;
 
 class Undead {
@@ -18,35 +15,41 @@ public:
 class Zombie : public Undead {
 public:
     string name() const override { return "Zombie"; }
-    int power() const override { return 15; }
-    int agility() const override { return 5; }
-    int endurance() const override { return 20; }
+    int power() const override { return 12; }
+    int agility() const override { return 4; }
+    int endurance() const override { return 15; }
 };
 
 class Skeleton : public Undead {
 public:
     string name() const override { return "Skeleton"; }
     int power() const override { return 10; }
-    int agility() const override { return 15; }
-    int endurance() const override { return 10; }
+    int agility() const override { return 12; }
+    int endurance() const override { return 8; }
 };
 
 class Lich : public Undead {
 public:
     string name() const override { return "Lich"; }
-    int power() const override { return 25; }
-    int agility() const override { return 12; }
-    int endurance() const override { return 18; }
+    int power() const override { return 20; }
+    int agility() const override { return 8; }
+    int endurance() const override { return 12; }
 };
 
-// Adapter: Undead → Character
 class UndeadAdapter : public Character {
-    shared_ptr<Undead> undead;
+private:
+    Undead* undead;
 public:
-    UndeadAdapter(shared_ptr<Undead> u) { 
-        /* TODO */
+    UndeadAdapter(Undead* u) : undead(u) {
+        description = u->name();
+        
+        if (description == "Zombie") type = CharacterType::Zombie;
+        else if (description == "Skeleton") type = CharacterType::Skeleton;
+        else if (description == "Lich") type = CharacterType::Lich;
+        else type = CharacterType::Unknown;
     }
-    int getAttack() const override { /* TODO */ return 0; }
-    int getSpeed() const override { /* TODO */ return 0; }
-    int getDefense() const override { /* TODO */ return 0; }
+
+    int getAttack() const override { return undead->power(); }
+    int getSpeed() const override { return undead->agility(); }
+    int getDefense() const override { return undead->endurance(); }
 };

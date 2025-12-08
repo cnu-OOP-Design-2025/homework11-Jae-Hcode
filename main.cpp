@@ -40,11 +40,10 @@ void doTest3() {
     players.push_back(make_shared<Knight>());
     players.push_back(make_shared<Wizard>());
     players.push_back(make_shared<Archer>());
-    /* TODO */
-    // Zombie 캐릭터를 players에 추가
-    // Skeleton 캐릭터를 players에 추가
-    // Lich 캐릭터를 players에 추가
 
+    players.push_back(make_shared<UndeadAdapter>(new Zombie()));
+    players.push_back(make_shared<UndeadAdapter>(new Skeleton()));
+    players.push_back(make_shared<UndeadAdapter>(new Lich()));
 
     for(auto player: players){
         cout << "-------------------------------------------------------------" << endl;
@@ -55,6 +54,7 @@ void doTest3() {
     cout << "-------------------------------------------------------------" << endl;
 
 }
+
 
 struct Student{
     string name;
